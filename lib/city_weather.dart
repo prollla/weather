@@ -49,7 +49,7 @@ class HourBean {
   num? tempF;
   num? isDay;
   ConditionBean? condition;
-  num? windFMph;
+  num? windMph;
   num? windKph;
   num? windDegree;
   String? windDir;
@@ -77,7 +77,7 @@ class HourBean {
   num? gustKph;
   num? uv;
 
-  HourBean({this.timeEpoch, this.time, this.tempC, this.tempF, this.isDay, this.condition, this.wind_mph, this.windKph, this.windDegree, this.windDir, this.pressureMb, this.pressureIn, this.precipMm, this.precipIn, this.humidity, this.cloud, this.feelslikeC, this.feelslikeF, this.windchillC, this.windchillF, this.heatindexC, this.heatindexF, this.dewpointC, this.dewpointF, this.willItRain, this.chanceOfRain, this.willItSnow, this.chanceOfSnow, this.visKm, this.visMiles, this.gustMph, this.gustKph, this.uv});
+  HourBean({this.timeEpoch, this.time, this.tempC, this.tempF, this.isDay, this.condition, this.windMph, this.windKph, this.windDegree, this.windDir, this.pressureMb, this.pressureIn, this.precipMm, this.precipIn, this.humidity, this.cloud, this.feelslikeC, this.feelslikeF, this.windchillC, this.windchillF, this.heatindexC, this.heatindexF, this.dewpointC, this.dewpointF, this.willItRain, this.chanceOfRain, this.willItSnow, this.chanceOfSnow, this.visKm, this.visMiles, this.gustMph, this.gustKph, this.uv});
 
   factory HourBean.fromJson(Map<String, dynamic> json) => _$HourBeanFromJson(json);
 
