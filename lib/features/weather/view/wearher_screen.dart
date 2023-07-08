@@ -12,15 +12,18 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
 
+  TextStyle whiteText = const TextStyle(
+    fontSize: 18,
+    color: Colors.white,
+  );
 
   @override
   Widget build(BuildContext context) {
-    double borderRadius = 20;
-
     return Container(
       decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
         Color(0xFF29B2DD),
+        Color(0xFF33AADD),
         Color(0xFF2DC8EA),
       ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
       child: Scaffold(
@@ -32,853 +35,261 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   slivers: [
                     SliverAppBar(
                       backgroundColor: Colors.transparent,
-                      expandedHeight: 200,
-                      // floating: true,
-                      pinned: false,
-                      flexibleSpace: Stack(
-                        children: [
-                          Positioned.fill(
-                            child: Center(
+                      expandedHeight: 300,
+                      pinned: true,
+                      flexibleSpace: LayoutBuilder(
+                        builder: (BuildContext context, BoxConstraints constraints) {
+                          return FlexibleSpaceBar(
+                            background: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Expanded(
-                                          child: Transform.scale(
-                                            scale: 2,
-                                              child: Image.network('https:${state.weather.current?.condition?.icon}'))),
-                                  Text('${state.weather.location?.name}°',
-                                      style: TextStyle(
-                                          fontSize: 25, color: Colors.white)),
-                                  Text('${state.weather.current?.tempC}°',
-                                      style: TextStyle(
-                                          fontSize: 50, color: Colors.white)),
-                                   Text('${state.weather.current?.condition?.text}',
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.white)),
-                                   Row(
+                                  Transform.scale(scale: 2, child: Image.asset('assets/Logo.png', height: 170, width: 170)),
+                                  const SizedBox(height: 10),
+                                  Text('${state.weather.current?.tempC}°', style: const TextStyle(fontSize: 50, color: Colors.white)),
+                                  Text('${state.weather.current?.condition?.text}', style: const TextStyle(fontSize: 20, color: Colors.white)),
+                                  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text('Max: ${state.weather.forecast?.forecastday?[0].day?.maxtempC}°',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                      SizedBox(width: 10),
-                                      Text('Min: ${state.weather.forecast?.forecastday?[0].day?.mintempC}°',
-                                          style:
-                                              TextStyle(color: Colors.white)),
+                                      Text('Max: ${state.weather.forecast?.forecastday?[0].day?.maxtempC}°', style: const TextStyle(fontSize: 20, color: Colors.white)),
+                                      const SizedBox(width: 10),
+                                      Text('Min: ${state.weather.forecast?.forecastday?[0].day?.mintempC}°', style: const TextStyle(fontSize: 20, color: Colors.white)),
                                     ],
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
                     ),
                     SliverList(
                       delegate: SliverChildListDelegate([
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12.0, horizontal: 10),
-                          child: FractionallySizedBox(
-                            widthFactor: 0.85,
-                            child: Card(
-                              color: const Color(0XFF104084).withOpacity(0.3),
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(borderRadius),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 6.0, horizontal: 20),
-                                child: LayoutBuilder(
-                                  builder: (BuildContext context,
-                                      BoxConstraints constraints) {
-                                    return Row(
-                                      children: [
-                                        SizedBox(
-                                          height: constraints.maxWidth *
-                                              0.1, // 10% от ширины экрана
-                                          width: constraints.maxWidth *
-                                              0.1, // 10% от ширины экрана
-                                          child:
-                                              Image.asset('assets/Rain2.png'),
-                                        ),
-                                         Text(
-                                          '${state.weather.forecast!.forecastday?[0].day?.dailyChanceOfRain}%',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        const Spacer(
-                                          flex: 1,
-                                        ),
-                                        SizedBox(
-                                          height: constraints.maxWidth *
-                                              0.1, // 10% от ширины экрана
-                                          width: constraints.maxWidth *
-                                              0.1, // 10% от ширины экрана
-                                          child: Image.asset(
-                                              'assets/Градусник.png'),
-                                        ),
-                                        Text('${state.weather.current?.humidity}%',
-                                            style:
-                                                TextStyle(color: Colors.white)),
-                                        const Spacer(flex: 1),
-                                        SizedBox(
-                                          height: constraints.maxWidth *
-                                              0.1, // 10% от ширины экрана
-                                          width: constraints.maxWidth *
-                                              0.1, // 10% от ширины экрана
-                                          child: Image.asset('assets/Wind.png'),
-                                        ),
-                                         Text('${state.weather.current?.windMph} м/с',
-                                            style:
-                                                TextStyle(color: Colors.white))
-                                      ],
-                                    );
-                                  },
+                          padding: const EdgeInsets.symmetric(horizontal: 35),
+                          child: Container(
+                            height: 47,
+                            width: 343,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: const Color(0xFF1044084).withOpacity(0.7)
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                                  child: Row(
+                                    children: [
+                                      Image.asset('assets/Rain2.png'),
+                                      Text("18%", style: whiteText,),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 21),
+                                  child: Row(
+                                    children: [
+                                      Image.asset('assets/Градусник.png'),
+                                      Text("67%", style: whiteText,),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                                        child: Image.asset('assets/Wind.png'),
+                                      ),
+                                      Text("25 mp/h", style: whiteText,),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 35),
+                          child: Container(
+                            height: 303,
+                            width: 217,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: const Color(0xFF104084).withOpacity(0.7)
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 16),
+                                  child: Row(
+                                    children: [
+                                      const Text("Today", style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),),
+                                      const SizedBox(width: 197,),
+                                      Text("June", style: whiteText),
+                                    ],
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 21,vertical: 30),
+                                      child: Text("${state.weather.current?.tempC}°", style: whiteText),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 21),
+                                      child: Text("${state.weather.current?.tempC}°", style: whiteText),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 21),
+                                      child: Text("${state.weather.current?.tempC}°", style: whiteText),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                                      child: Text("${state.weather.current?.tempC}°", style: whiteText),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 30),
+                                      child: SizedBox(
+                                        height: 21,
+                                          width: 21,
+                                          child: Transform.scale(scale:4,
+                                              child: Image.asset('assets/Logo.png'))),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 30),
+                                      child: SizedBox(
+                                          height: 21,
+                                          width: 21,
+                                          child: Transform.scale(scale:4,
+                                              child: Image.asset('assets/Logo.png'))),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 30),
+                                      child: SizedBox(
+                                          height: 21,
+                                          width: 21,
+                                          child: Transform.scale(scale:4,
+                                              child: Image.asset('assets/Logo.png'))),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 30),
+                                      child: SizedBox(
+                                          height: 21,
+                                          width: 21,
+                                          child: Transform.scale(scale:4,
+                                              child: Image.asset('assets/Logo.png'))),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+                                      child: Text("15:00", style: whiteText),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                                      child: Text("16:00", style: whiteText),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                                      child: Text("17:00", style: whiteText),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                                      child: Text("18:00", style: whiteText),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12.0, horizontal: 10),
-                          child: FractionallySizedBox(
-                            widthFactor: 0.85,
-                            child: Card(
-                              color: const Color(0XFF104084).withOpacity(0.3),
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(borderRadius),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 10),
-                                child: Column(
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        Expanded(child: Center(
-                                          child: Text('Погода по дням', style: TextStyle(
-                                            color: Colors.white
-                                          ),),
-                                        ))
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Верхняя строка с двумя элементами
-                                    const Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                    child: Text('Сегодня',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('Завтра',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('Послезавтра',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Остальные строки с четырьмя элементами в каждой
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].day?.avgtempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[1].day?.avgtempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[2].day?.avgtempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                          widthFactor: 0.55,
-                                          // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                          child: Image.network('https:${state.weather.current?.condition?.icon}'),
-                                        )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                          widthFactor: 0.55,
-                                          // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                          child: Image.network('https:${state.weather.current?.condition?.icon}'),
-                                        )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                          widthFactor: 0.55,
-                                          // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                          child: Image.network('https:${state.weather.current?.condition?.icon}'),
-                                        )),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                     Row(
-                                      children: [
-                                        SizedBox(width: 25,),
-                                        Expanded(
-                                            child: Center(
-                                                child:
-                                                Row(
-                                                  children: [
-                                                    Image.asset('assets/Rain2.png'),
-                                                    Text('${state.weather.forecast!.forecastday?[0].day?.dailyChanceOfRain}%',
-                                                    style: TextStyle(
-                                                      color: Colors.white
-                                                    )),
-                                                  ],
-                                                ))),
-                                        SizedBox(width: 25,),
-                                        Expanded(
-                                            child: Center(
-
-                                                child:
-                                                Row(
-                                                  children: [
-                                                    Image.asset('assets/Rain2.png'),
-                                                    Text('${state.weather.forecast!.forecastday?[0].day?.dailyChanceOfRain}%',
-                                                        style: TextStyle(
-                                                            color: Colors.white
-                                                        )),
-                                                  ],
-                                                ))),
-                                        SizedBox(width: 25,),
-                                        Expanded(
-
-                                            child: Center(
-
-                                                child:
-                                                Row(
-                                                  children: [
-                                                    Image.asset('assets/Rain2.png'),
-                                                    Text('${state.weather.forecast!.forecastday?[0].day?.dailyChanceOfRain}%',
-                                                        style: TextStyle(
-                                                            color: Colors.white
-                                                        )),
-                                                  ],
-                                                ))),
-                                      ],
-                                    ),
-                                  ],
+                          padding: const EdgeInsets.symmetric(horizontal: 35),
+                          child: Container(
+                            height: 230,
+                            width: 217,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: const Color(0xFF104084).withOpacity(0.7)
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 11, 165, 0),
+                                  child: Text("Next Forecats", style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  )),
                                 ),
-                              ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(27, 19, 0, 14),
+                                  child: Row(
+                                    children: [
+                                      Text("Today", style: whiteText,),
+                                      Transform.scale(scale:3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
+                                            child: Image.asset("assets/Logo.png", height: 25, width: 25,),
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(120, 0, 0, 0),
+                                        child: Text("13°", style: whiteText,),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(27, 19, 0, 14),
+                                  child: Row(
+                                    children: [
+                                      Text("Tomorrow", style: whiteText,),
+                                      Transform.scale(scale:3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                            child: Image.asset("assets/Logo.png", height: 25, width: 25,),
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(102, 0, 0, 0),
+                                        child: Text("13°", style: whiteText,),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(27, 19, 0, 14),
+                                  child: Row(
+                                    children: [
+                                      Text("After tomorrow", style: whiteText,),
+                                      Transform.scale(scale:3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
+                                            child: Image.asset("assets/Logo.png", height: 25, width: 25,),
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(80, 0, 0, 0),
+                                        child: Text("13°", style: whiteText,),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12.0, horizontal: 10),
-                          child: FractionallySizedBox(
-                            widthFactor: 0.85,
-                            child: Card(
-                              color: const Color(0XFF104084).withOpacity(0.3),
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(borderRadius),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 10),
-                                child: Column(
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        Expanded(child: Center(
-                                          child: Text('Почасовая погода на сегодня', style: TextStyle(
-                                              color: Colors.white
-                                          ),),
-                                        ))
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Верхняя строка с двумя элементами
-                                    const Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('00:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('01:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('02:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('03:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Остальные строки с четырьмя элементами в каждой
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[0].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[1].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[2].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[3].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[0].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[0].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[0].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[0].condition?.icon}'),
-                                            )),
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 1,
-                                      color: Colors.white,
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Верхняя строка с двумя элементами
-                                    const Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('04:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('05:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('06:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('07:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Остальные строки с четырьмя элементами в каждой
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[4].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[5].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[6].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[7].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[4].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[5].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[6].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[7].condition?.icon}'),
-                                            )),
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 1,
-                                      color: Colors.white,
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-
-                                    // Верхняя строка с двумя элементами
-                                    const Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('08:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('09:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('10:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('11:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Остальные строки с четырьмя элементами в каждой
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[8].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[9].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[10].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[11].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[8].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[9].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[10].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[11].condition?.icon}'),
-                                            )),
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 1,
-                                      color: Colors.white,
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Верхняя строка с двумя элементами
-                                    const Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('12:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('13:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('14:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('15:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Остальные строки с четырьмя элементами в каждой
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[12].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[13].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[14].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[15].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[12].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[13].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[14].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[15].condition?.icon}'),
-                                            )),
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 1,
-                                      color: Colors.white,
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Верхняя строка с двумя элементами
-                                    const Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('16:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('17:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('18:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('19:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Остальные строки с четырьмя элементами в каждой
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[16].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[17].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[18].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[19].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[16].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[17].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[18].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[19].condition?.icon}'),
-                                            )),
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 1,
-                                      color: Colors.white,
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Верхняя строка с двумя элементами
-                                    const Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('20:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('21:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('22:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('23:00',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Остальные строки с четырьмя элементами в каждой
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[20].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[21].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[22].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-                                        Expanded(
-                                            child: Center(
-                                                child: Text('${state.weather.forecast!.forecastday?[0].hour?[23].tempC}°',
-                                                    style: TextStyle(
-                                                        color: Colors.white)))),
-
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[20].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[21].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[22].condition?.icon}'),
-                                            )),
-                                        Expanded(
-                                            child: FractionallySizedBox(
-                                              widthFactor: 0.55,
-                                              // Устанавливаем ширину изображения в 50% от ширины родительского контейнера
-                                              child: Image.network('https:${state.weather.forecast!.forecastday?[0].hour?[23].condition?.icon}'),
-                                            )),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        )
                       ]),
                     )
                   ],
