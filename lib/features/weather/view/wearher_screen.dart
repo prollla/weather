@@ -131,7 +131,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                       ),),
-                                      const SizedBox(width: 197,),
+                                      const SizedBox(width: 206,),
                                       Text("June", style: whiteText),
                                     ],
                                   ),
