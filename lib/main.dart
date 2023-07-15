@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/features/weather/data/repository/weather_repository_impl.dart';
 import 'package:weather/features/weather/domain/weather_bloc.dart';
+import 'package:weather/features/weather/view/favorites_screen.dart';
 import 'dart:ui';
 
 import 'features/weather/view/wearher_screen.dart';
@@ -21,35 +22,29 @@ void main() async {
       handler.next(options);
     },
   ));
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider<WeatherBloc>(
-        create: (BuildContext context) =>
-            WeatherBloc(repository: WeatherRepositoryImpl(dio: dio))
-              ..add(RequestWeatherEvent(
-                city: 'Воронеж',
-                days: 5,
-              )),
-        child: const MaterialApp(
-          title: 'Flutter Demo',
-          home: AnnotatedRegion<SystemUiOverlayStyle>(
-            value: SystemUiOverlayStyle(
-              statusBarColor:
-                  Colors.transparent, // Это делает статус бар прозрачным
-              statusBarIconBrightness:
-                  Brightness.dark, // Это устанавливает цвет иконок статус бара
-            ),
-            child: WeatherScreen(),
-          ),
-        ));
+      create: (BuildContext context) =>
+      WeatherBloc(repository: WeatherRepositoryImpl(dio: dio))
+        ..add(RequestWeatherEvent(
+          city: 'Воронеж',
+          days: 5,
+        )),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const WeatherScreen(),
+          '/favorites': (context) => const FavoriteScreen(),
+        },
+      ),
+    );
   }
 }
