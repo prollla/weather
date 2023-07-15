@@ -17,29 +17,22 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const MyDrawer(),
+      endDrawer: const MyDrawer(),
       appBar: AppBar(
-        title: const Text("123"),
+        title: const Text("Избранные места"),
         centerTitle: true,
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
-        ),
       ),
       body: ListView.builder(
         itemCount: favoritesList.length,
-          itemBuilder: (BuildContext context, int index){
-
-          }),
+        itemBuilder: (BuildContext context, int index) {
+          // Ваш код для построения элементов списка
+          return Container();
+        },
+      ),
     );
   }
 }
+
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});

@@ -559,7 +559,7 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.star),
             title: const Text('Избранные города'),
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/favorites');
+              Navigator.pushNamed(context, '/favorites');
             },
           ),
         ],
