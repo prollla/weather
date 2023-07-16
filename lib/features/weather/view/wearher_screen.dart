@@ -90,7 +90,7 @@ class WeatherBody extends StatelessWidget {
           WeatherDetails(state: state),
         ],
       ),
-      drawer: MyDrawer(state: state),
+      endDrawer: MyDrawer(state: state),
     );
   }
 }
@@ -110,16 +110,6 @@ class WeatherAppBar extends StatelessWidget {
         builder: (BuildContext context, BoxConstraints constraints) {
           return FlexibleSpaceBar(
             background: WeatherHeader(state: state),
-          );
-        },
-      ),
-      leading: Builder(
-        builder: (BuildContext context) {
-          return IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
           );
         },
       ),
@@ -551,7 +541,7 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Погода'),
             onTap: () {
               // Обработчик нажатия на пункт меню "Главная"
-              Navigator.pop(context); // Закрыть боковое меню после выбора
+              Navigator.pushNamed(context, '/'); // Закрыть боковое меню после выбора
               // Дополнительные действия при выборе пункта меню "Главная"
             },
           ),

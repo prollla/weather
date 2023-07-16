@@ -12,12 +12,18 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  late String _city;
   List favoritesList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    favoritesList.addAll(['Москва']);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: const MyDrawer(),
       appBar: AppBar(
         title: const Text("Избранные места"),
         centerTitle: true,
@@ -25,60 +31,73 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       body: ListView.builder(
         itemCount: favoritesList.length,
         itemBuilder: (BuildContext context, int index) {
-          // Ваш код для построения элементов списка
-          return Container();
+          return Dismissible(
+            key: Key(favoritesList[index]),
+            child: Card(
+              child: ListTile(
+                title: Text(favoritesList[index]),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.cloud,
+                        color: Colors.blue,
+                      ),
+                      onPressed: () {
+                        WeatherBloc weatherBloc =
+                            BlocProvider.of<WeatherBloc>(context);
+                        weatherBloc.add(RequestWeatherEvent(
+                            city: favoritesList[index], days: 3));
+                        Navigator.pushNamed(context, '/');
+                        // Handle delete button pressed
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.delete_forever,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          favoritesList.removeAt(index);
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            onDismissed: (direction) {
+              setState(() {
+                favoritesList.removeAt(index);
+              });
+            },
+          );
         },
       ),
-    );
-  }
-}
-
-
-class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  '123',
-                  style: whiteText,
-                ),
-                Text(
-                    '123',
-                    style: whiteText
-                ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+          onPressed: () {
+          showDialog(context: context, builder: (BuildContext context){
+            return AlertDialog(
+              title: const Text("Введите город"),
+              content: TextField(
+                onChanged: (String value){
+                  _city = value;
+                },
+              ),
+              actions: [
+                ElevatedButton(onPressed: (){
+                  setState(() {
+                    favoritesList.add(_city);
+                  });
+                  Navigator.of(context).pop();
+                }, child: const Text("Добавить"),)
               ],
-            ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.cloud),
-            title: const Text('Погода'),
-            onTap: () {
-              WeatherBloc weatherBloc = BlocProvider.of<WeatherBloc>(context);
-              weatherBloc.add(RequestWeatherEvent(city: 'Лондон', days: 3)); // Передача новых данных через событие
-              Navigator.pushReplacementNamed(context, '/'); // Открытие WeatherScreen
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.star),
-            title: const Text('Избранные города'),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/favorites');
-            },
-          ),
-        ],
-      ),
+            );
+          });
+          }, child: const Icon(Icons.add, color: Colors.white)),
     );
   }
 }
