@@ -32,7 +32,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         itemCount: favoritesList.length,
         itemBuilder: (BuildContext context, int index) {
           return Dismissible(
-            key: Key(favoritesList[index]),
+            key: UniqueKey(),
             child: Card(
               child: ListTile(
                 title: Text(favoritesList[index]),
