@@ -541,7 +541,7 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Погода'),
             onTap: () {
               // Обработчик нажатия на пункт меню "Главная"
-              Navigator.pushNamed(context, '/'); // Закрыть боковое меню после выбора
+              Navigator.pushReplacementNamed(context, '/'); // Закрыть боковое меню после выбора
               // Дополнительные действия при выборе пункта меню "Главная"
             },
           ),
@@ -549,7 +549,7 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.star),
             title: const Text('Избранные города'),
             onTap: () {
-              Navigator.pushNamed(context, '/favorites');
+              Navigator.pushReplacementNamed(context, '/favorites');
             },
           ),
         ],

@@ -18,7 +18,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   void initState() {
     super.initState();
-    favoritesList.addAll(['Москва']);
+    favoritesList.addAll([]);
   }
 
   @override
@@ -49,7 +49,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                             BlocProvider.of<WeatherBloc>(context);
                         weatherBloc.add(RequestWeatherEvent(
                             city: favoritesList[index], days: 3));
-                        Navigator.pushNamed(context, '/');
+                        Navigator.pushReplacementNamed(context, '/');
                         // Handle delete button pressed
                       },
                     ),
